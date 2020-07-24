@@ -1,3 +1,4 @@
+//get last workout and renders it to screen
 async function initWorkout() {
   const lastWorkout = await API.getLastWorkout();
   console.log("Last workout:", lastWorkout);
@@ -44,6 +45,7 @@ function formatDate(date) {
   return new Date(date).toLocaleDateString(options);
 }
 
+//show workout summary
 function renderWorkoutSummary(summary) {
   const container = document.querySelector(".workout-stats");
 
