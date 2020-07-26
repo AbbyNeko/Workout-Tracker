@@ -20,13 +20,18 @@ var ExerciseSchema = new Schema({
     sets: { 
         type: Number,
         default: 0
+    },
+    distance: { 
+        type: Number,
+        default: 0
     }
   });
 
 const WorkoutSchema = new Schema({
     day: {
         type: Date,
-        required: "Date is required"
+        required: "Date is required",
+        default: Date.now()
     },
     totalDuration: {
         type: Number

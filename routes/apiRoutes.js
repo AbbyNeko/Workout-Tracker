@@ -6,7 +6,6 @@ module.exports = function(app) {
         app.get('/api/workouts/range', (req, res) => {
 
             db.Workout.find({})
-                        .populate("exercises")
                         .then(dbWorkout => {
                             res.json(dbWorkout);
                         }).catch(err => {
@@ -40,8 +39,12 @@ module.exports = function(app) {
         //put request to add exercise to workout
         app.put('/api/workouts/:id', ({params, body}, res) => {
 
-            db.Workout.findOneAndUpdate({_id: params.id}, {$push: body}, {new: true})
+            //console.log(`exercise body - ${JSON.stringify(body)}`);
+
+            db.Workout.findOneAndUpdate({_id: params.id}, {$push: {exercises: body}}, {new: true})
                                         .then(dbWorkout => {
+                                            //console.log(`added - ${JSON.stringify(dbWorkout)}`);
+                                            dbWorkout.calculateTotalDuration();
                                             res.json(dbWorkout);
                                         })
                                         .catch(err => {
