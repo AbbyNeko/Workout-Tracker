@@ -6,6 +6,7 @@ module.exports = function(app) {
         app.get('/api/workouts/range', (req, res) => {
 
             db.Workout.find({})
+                        .populate("exercises")
                         .then(dbWorkout => {
                             res.json(dbWorkout);
                         }).catch(err => {
@@ -18,8 +19,9 @@ module.exports = function(app) {
         app.get('/api/workouts', (req, res) => {
              db.Workout.find({})
                         .then(dbWorkout => {
+                            dbWorkout[dbWorkout.length - 1].calculateTotalDuration();
                             res.json(dbWorkout);
-                        }).catch(err => {
+                        }).catch(err => {   
                             res.json(err);
                         });
         });
